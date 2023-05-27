@@ -20,8 +20,8 @@
       integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="./login.css" />
-    <title>Register</title>
+    <link rel="stylesheet" href="./style.css" />
+    <title>Home</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -64,37 +64,38 @@
 
     <div class="container">
       <div class="row">
-        <div class="col"></div>
-        <div class="col-6">
-          <form class="text-white">
-            <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="username" />
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="passowrd" />
-            </div>
-            <div class="mb-3">
-              <label for="confirmPassword" class="form-label"
-                >Confirm Password</label
-              >
-              <input
-                type="password"
-                class="form-control"
-                id="confirmPassword"
-              />
-            </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="rememberMe" />
-              <label class="form-check-label" for="rememberMe"
-                >Remember Me</label
-              >
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
+        <div class="col-12">
+          <table
+            class="table table-dark table-striped table-hover table-bordered"
+          >
+            <h1 id="title">Your Friends:</h1>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Birth Date</th>
+                <th scope="col">Hobbies</th>
+                <th scope="col">Personality</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mohamed Amine Safi</td>
+                <td>6 April 2004</td>
+                <td>Reading</td>
+                <td>Kind</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Mariam Briki</td>
+                <td>24 July 2005</td>
+                <td>Cooking</td>
+                <td>Warm</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="col"></div>
       </div>
     </div>
   </body>
