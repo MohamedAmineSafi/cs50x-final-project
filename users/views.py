@@ -4,8 +4,6 @@ from .models import User
 import hashlib
 from utils.parseBody import parseBody
 from utils.giveError import throwError
-from dotenv import load_dotenv
-from pathlib import Path
 import os
 import jwt
 from utils.getNMonthsFromNow import getNMonthsFromNow
@@ -14,16 +12,17 @@ from django.http import HttpResponseRedirect
 from datetime import timedelta
 from utils.isLoggedIn import isLoggedIn
 
-# Prepare .env file
-dotenv_path = Path(os.path.join(settings.PROJECT_DIR, "config.env"))
-load_dotenv(dotenv_path=dotenv_path)
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = settings.SECRET_KEY
 
 
 # Create your views here.
 class RegisterPage(View):
     def get(self, req):
-        return render(req, "users/register.html")
+        return render(
+            req,
+            "users/register.html",
+            {"isLoggedIn": isLoggedIn(req, User, SECRET_KEY)},
+        )
 
     def post(self, req):
         # Get user data
@@ -84,7 +83,9 @@ class RegisterPage(View):
 
 class LoginPage(View):
     def get(self, req):
-        return render(req, "users/login.html")
+        return render(
+            req, "users/login.html", {"isLoggedIn": isLoggedIn(req, User, SECRET_KEY)}
+        )
 
     def post(self, req):
         # Get user data
@@ -148,7 +149,11 @@ class LoginPage(View):
 
 class ChangePasswordPage(View):
     def get(self, req):
-        return render(req, "users/changePassword.html")
+        return render(
+            req,
+            "users/changePassword.html",
+            {"isLoggedIn": isLoggedIn(req, User, SECRET_KEY)},
+        )
 
     def post(self, req):
         if not isLoggedIn(req, User, SECRET_KEY):

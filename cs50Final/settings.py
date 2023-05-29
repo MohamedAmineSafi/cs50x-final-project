@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-
+from dotenv import load_dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -137,3 +137,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+dotenv_path = Path(os.path.join(PROJECT_DIR, "config.env"))
+load_dotenv(dotenv_path=dotenv_path)
+SECRET_KEY = os.getenv("SECRET_KEY")

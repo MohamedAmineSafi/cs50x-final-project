@@ -48,17 +48,20 @@
             </li>
           </ul>
           <ul class="navbar-nav ms-auto flex-nowrap">
+            {% if isLoggedIn %}
             <li class="nav-item">
               <a class="nav-link" href="/auth/changePassword"
                 >Change Password</a
               >
             </li>
+            {% else %}
             <li class="nav-item">
               <a class="nav-link" href="/auth/register">Register</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/auth/login">Login</a>
             </li>
+            {% endif %}
           </ul>
         </div>
       </div>
