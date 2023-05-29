@@ -195,3 +195,10 @@ class ChangePasswordPage(View):
         user.jwtToken = ""
         user.save()
         return redirect("/")
+
+
+class Logout(View):
+    def get(self, req):
+        response = HttpResponseRedirect("/")
+        response.set_cookie("jwt_token", "", secure=False, httponly=False)
+        return response
