@@ -12,10 +12,12 @@ from utils.getNMonthsFromNow import getNMonthsFromNow
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from datetime import timedelta
+from utils.isLoggedIn import isLoggedIn
 
 # Prepare .env file
 dotenv_path = Path(os.path.join(settings.PROJECT_DIR, "config.env"))
 load_dotenv(dotenv_path=dotenv_path)
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 # Create your views here.
@@ -60,7 +62,6 @@ class RegisterPage(View):
             "hashedPassword": hashedPassword,
             "exp": expireDate,
         }
-        SECRET_KEY = os.getenv("SECRET_KEY")
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
         # save user
@@ -124,7 +125,6 @@ class LoginPage(View):
             "hashedPassword": hashedPassword,
             "exp": expireDate,
         }
-        SECRET_KEY = os.getenv("SECRET_KEY")
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
         # write new jwt to DB
@@ -151,6 +151,9 @@ class ChangePasswordPage(View):
         return render(req, "users/changePassword.html")
 
     def post(self, req):
+        if not isLoggedIn(req, User, SECRET_KEY):
+            return throwError()
+
         # Get data from form
         res = parseBody(req.body)
         currentPass = res["currentPassword"]
