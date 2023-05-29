@@ -3,15 +3,19 @@ from django.views.generic import TemplateView
 from django.views import View
 from .models import User
 import hashlib
-
 from utils.parseBody import parseBody
 from utils.giveError import throwError
 from dotenv import load_dotenv
 from pathlib import Path
 import os
+import jwt
+from utils.getNMonthsFromNow import getNMonthsFromNow
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from datetime import timedelta
 
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-dotenv_path = Path(os.path.join(PROJECT_DIR, "config.env"))
+# Prepare .env file
+dotenv_path = Path(os.path.join(settings.PROJECT_DIR, "config.env"))
 load_dotenv(dotenv_path=dotenv_path)
 
 
@@ -33,6 +37,9 @@ class RegisterPage(View):
             rememberMe = "off"
 
         # Check password
+        if password == "":
+            return throwError()
+
         if not (password == confirmPassword):
             return throwError()
 
@@ -41,16 +48,38 @@ class RegisterPage(View):
         if user_count > 0:
             return throwError()
 
-        # Save user
+        # Hash Password
         salt = os.getenv("salt")
         tmp = password + salt
         hashedPassword = hashlib.sha256(tmp.encode("utf-8")).hexdigest()
-        newUser = User(username=username, password=hashedPassword)
+
+        # encode jwt token
+        N = int(os.getenv("CookieLifeInMonths"))
+        expireDate = getNMonthsFromNow(N)
+        payload = {
+            "username": username,
+            "hashedPassword": hashedPassword,
+            "exp": expireDate,
+        }
+        SECRET_KEY = os.getenv("SECRET_KEY")
+        token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
+        # save user
+        newUser = User(username=username, password=hashedPassword, jwtToken=token)
         newUser.save()
 
-        # Store cookie
+        # save cookie
+        response = HttpResponseRedirect("/")  # Like HttpResponse, but redirects you
 
-        return redirect("/")
+        if rememberMe == "on":
+            delta = timedelta(days=N * 30)
+            response.set_cookie(
+                "jwt_token", token, secure=False, httponly=False, max_age=delta
+            )
+        else:
+            response.set_cookie("jwt_token", token, secure=False, httponly=False)
+
+        return response  # DONT FORGET
 
 
 class LoginPage(TemplateView):
