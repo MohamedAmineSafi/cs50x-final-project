@@ -1,45 +1,7 @@
 {% extends "base.html" %} {% load static %} {% block cssFile %}<link
   rel="stylesheet"
-  href="{% static 'login.css' %}"
+  href="{% static 'css/login.css' %}"
 />{% endblock %} {% block title %}Login{% endblock %} {% block body %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Friendster</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Add friend</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ms-auto flex-nowrap">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Change Password</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
 <div class="container">
   <div class="row">
     <div class="col"></div>
