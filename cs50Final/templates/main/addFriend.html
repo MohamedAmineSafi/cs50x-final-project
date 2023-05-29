@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% load static %} {% block cssFile %}<link
+  rel="stylesheet"
+  href="{% static 'css/add.css' %}"
+/>{% endblock %} {% block title %}Home{% endblock %} {% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-6">
+      <form class="text-white">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" />
+        </div>
+        <div class="mb-3">
+          <label for="birthday" class="form-label">Birthday</label>
+          <input type="text" class="form-control" id="birthday" />
+        </div>
+        <div class="mb-3">
+          <label for="hobbies" class="form-label">Hobbies</label>
+          <input type="text" class="form-control" id="hobbies" />
+        </div>
+        <div class="mb-3">
+          <label for="personality" class="form-label">Personality</label>
+          <input type="text" class="form-control" id="personality" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
+{% endblock %}

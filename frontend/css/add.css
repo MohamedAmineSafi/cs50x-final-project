@@ -1,0 +1,22 @@
+@media (max-width: 1400px) {
+  form {
+    margin-top: 5rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  form {
+    margin-top: 15rem;
+  }
+}
+
+body {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://cdn.pixabay.com/photo/2023/05/21/19/45/rose-8009275_1280.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; /* Adjust the height as per your requirements */
+  margin: 0;
+  padding: 0;
+}
