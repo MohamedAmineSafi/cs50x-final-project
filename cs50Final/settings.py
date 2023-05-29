@@ -82,8 +82,12 @@ WSGI_APPLICATION = 'cs50Final.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'Cluster0',
+        'ENFORCE_SCHEMA': True,
+        'CLIENT': {
+            'host': 'mongodb+srv://mohammedameenalsafi:C9LY1w4W7ny8Dp63@cluster0.m4bgnbj.mongodb.net/?retryWrites=true&w=majority'
+        }  
     }
 }
 
