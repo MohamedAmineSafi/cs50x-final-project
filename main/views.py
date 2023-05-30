@@ -11,19 +11,21 @@ SECRET_KEY = settings.SECRET_KEY
 
 
 # Create your views here.
-class HomePage(TemplateView):
-    http_method_names = ["get"]
-    template_name = "main/index.html"
+class HomePage(View):
+    def get(self, req):
+        if not isLoggedIn(req, User, SECRET_KEY):
+            return redirect("/auth/login/")
 
-    def dispatch(self, request, *args, **kwargs):
-        self.request = request
-        return super().dispatch(request, *args, **kwargs)
+        # Get friends from DB
+        token = req.COOKIES["jwt_token"]
+        user = User.objects.get(jwtToken=token)
+        friends = Friend.objects.values().filter(addedBy=user)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context["isLoggedIn"] = isLoggedIn(self.request, User, SECRET_KEY)
-        return context
+        return render(
+            req,
+            "main/index.html",
+            {"isLoggedIn": isLoggedIn(req, User, SECRET_KEY), "friends": friends},
+        )
 
 
 class Add(View):

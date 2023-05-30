@@ -15,23 +15,20 @@
             <th scope="col">Birth Date</th>
             <th scope="col">Hobbies</th>
             <th scope="col">Personality</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
+          {% for friend in friends %}
           <tr>
-            <th scope="row">1</th>
-            <td>Mohamed Amine Safi</td>
-            <td>6 April 2004</td>
-            <td>Reading</td>
-            <td>Kind</td>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ friend.name }}</td>
+            <td>{{ friend.birthday }}</td>
+            <td>{{ friend.hobbies }}</td>
+            <td>{{ friend.personality }}</td>
+            <td><a href="/delete/{{ friend.id }}">Remove Friend</a></td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Mariam Briki</td>
-            <td>24 July 2005</td>
-            <td>Cooking</td>
-            <td>Warm</td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
