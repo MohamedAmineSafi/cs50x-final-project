@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
-from django.views.generic import View, TemplateView
+from django.views.generic import View
 from users.models import User
 from utils.giveError import throwError
 from utils.isLoggedIn import isLoggedIn
@@ -63,4 +63,24 @@ class Add(View):
             personality=personality,
         )
         newFriend.save()
+        return redirect("/")
+
+
+class Delete(View):
+    def get(self, req, *args, **kwargs):
+        if not isLoggedIn(req, User, SECRET_KEY):
+            return throwError()
+
+        idToDelete = kwargs.get("friend_id")
+
+        # Get logged in user
+        token = req.COOKIES["jwt_token"]
+        user = User.objects.get(jwtToken=token)
+
+        # Delete
+        try:
+            Friend.objects.get(addedBy=user, id=idToDelete).delete()
+        except:
+            return throwError()
+
         return redirect("/")
