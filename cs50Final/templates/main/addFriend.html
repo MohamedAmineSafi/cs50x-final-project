@@ -7,22 +7,33 @@
   <div class="row">
     <div class="col"></div>
     <div class="col-6">
-      <form class="text-white">
+      <form class="text-white" action="/add/" method="post">
+        {% csrf_token %}
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" />
+          <input type="text" class="form-control" id="name" name="name" />
         </div>
         <div class="mb-3">
           <label for="birthday" class="form-label">Birthday</label>
-          <input type="text" class="form-control" id="birthday" />
+          <input
+            type="text"
+            class="form-control"
+            id="birthday"
+            name="birthday"
+          />
         </div>
         <div class="mb-3">
           <label for="hobbies" class="form-label">Hobbies</label>
-          <input type="text" class="form-control" id="hobbies" />
+          <input type="text" class="form-control" id="hobbies" name="hobbies" />
         </div>
         <div class="mb-3">
           <label for="personality" class="form-label">Personality</label>
-          <input type="text" class="form-control" id="personality" />
+          <input
+            type="text"
+            class="form-control"
+            id="personality"
+            name="personality"
+          />
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

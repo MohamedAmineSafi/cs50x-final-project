@@ -1,15 +1,17 @@
+import os
+from datetime import timedelta
+import hashlib
+import jwt
+
 from django.shortcuts import render, redirect
 from django.views import View
+from django.http import HttpResponseRedirect
+from django.conf import settings
+
 from .models import User
-import hashlib
 from utils.parseBody import parseBody
 from utils.giveError import throwError
-import os
-import jwt
 from utils.getNMonthsFromNow import getNMonthsFromNow
-from django.conf import settings
-from django.http import HttpResponseRedirect
-from datetime import timedelta
 from utils.isLoggedIn import isLoggedIn
 
 SECRET_KEY = settings.SECRET_KEY

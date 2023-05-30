@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
-from django.views.generic import TemplateView
-
+from django.views.generic import View, TemplateView
 from users.models import User
+from utils.giveError import throwError
 from utils.isLoggedIn import isLoggedIn
+from utils.parseBody import parseBody
+from .models import Friend
 
 SECRET_KEY = settings.SECRET_KEY
 
@@ -24,16 +26,39 @@ class HomePage(TemplateView):
         return context
 
 
-class Add(TemplateView):
-    http_method_names = ["get"]
-    template_name = "main/addFriend.html"
+class Add(View):
+    def get(self, req):
+        return render(
+            req,
+            "main/addFriend.html",
+            {"isLoggedIn": isLoggedIn(req, User, SECRET_KEY)},
+        )
 
-    def dispatch(self, request, *args, **kwargs):
-        self.request = request
-        return super().dispatch(request, *args, **kwargs)
+    def post(self, req):
+        if not isLoggedIn(req, User, SECRET_KEY):
+            return throwError()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        # Get form data
+        res = parseBody(req.body)
+        name = res["name"]
+        birthday = res["birthday"]
+        hobbies = res["hobbies"]
+        personality = res["personality"]
 
-        context["isLoggedIn"] = isLoggedIn(self.request, User, SECRET_KEY)
-        return context
+        if name == "":
+            return throwError()
+
+        # Get logged in user
+        token = req.COOKIES["jwt_token"]
+        user = User.objects.get(jwtToken=token)
+
+        # save to DB
+        newFriend = Friend(
+            addedBy=user,
+            name=name,
+            birthday=birthday,
+            hobbies=hobbies,
+            personality=personality,
+        )
+        newFriend.save()
+        return redirect("/")
