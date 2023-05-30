@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
 from django.conf import settings
+from django.shortcuts import render, redirect
 from django.views.generic import View
+
 from users.models import User
-from utils.giveError import throwError
+from .models import Friend
 from utils.isLoggedIn import isLoggedIn
 from utils.parseBody import parseBody
-from .models import Friend
+from utils.giveError import throwError
 
 SECRET_KEY = settings.SECRET_KEY
 
